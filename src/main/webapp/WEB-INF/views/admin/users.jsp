@@ -6,11 +6,7 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="text"/>
 
-<html>
-<head>
-    <title><fmt:message key="text.admin.users.page"/></title>
-</head>
-<body>
+
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
 
 <div>
@@ -30,5 +26,3 @@
 
 
 <jsp:include page="/WEB-INF/views/parts/footer.jsp"/>
-</body>
-</html>

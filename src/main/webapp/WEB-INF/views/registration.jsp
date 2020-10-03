@@ -6,11 +6,6 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="text"/>
 
-<html>
-<head>
-    <title><fmt:message key="text.title"/></title>
-</head>
-<body>
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
 <div>
     <h3><fmt:message key="text.registration.form"/></h3>
@@ -29,5 +24,3 @@
     <fmt:message key="text.incorrect.user.present"/>
 </c:if>
 <jsp:include page="/WEB-INF/views/parts/footer.jsp"/>
-</body>
-</html>

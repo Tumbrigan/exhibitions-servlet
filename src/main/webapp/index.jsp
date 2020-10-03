@@ -6,36 +6,26 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="text"/>
 
-<html>
-<head>
-    <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
-    <title><fmt:message key="text.title"/></title>
+<jsp:include page="/WEB-INF/views/parts/header.jsp"/>
 
-    <style>
-        .wrapper {
-            display: flex;
-            align-items: center;
-            min-height: 75vh;
-        }
+<style>
+    .wrapper {
+        display: flex;
+        align-items: center;
+        min-height: 75vh;
+    }
+</style>
 
-    </style>
-</head>
-<body>
 <div class="wrapper">
     <div class="container">
-            <h3 class="flow-text"><fmt:message key="text.congratulations"/></h3>
-
-            <form method="post" action="${pageContext.request.contextPath}/exhibitions/login">
-                <input class="btn" type="submit" value="<fmt:message key="text.enter"/>">
-            </form>
-
-            <form method="post" action="${pageContext.request.contextPath}/exhibitions/registration">
-                <input class="btn" type="submit" value= <fmt:message key="text.registration"/>>
-            </form>
-
+        <h3 class="flow-text"><fmt:message key="text.congratulations"/></h3>
+        <form method="post" action="${pageContext.request.contextPath}/exhibitions/login">
+            <input class="btn" type="submit" value="<fmt:message key="text.enter"/>">
+        </form>
+        <form method="post" action="${pageContext.request.contextPath}/exhibitions/registration">
+            <input class="btn" type="submit" value= <fmt:message key="text.registration"/>>
+        </form>
     </div>
 </div>
 
 <jsp:include page="/WEB-INF/views/parts/footer.jsp"/>
-</body>
-</html>

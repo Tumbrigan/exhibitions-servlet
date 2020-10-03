@@ -1,11 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-<html>
 <head>
     <title><fmt:message key="text.admin.homepage.title"/></title>
 </head>
-<body>
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
 
 <div>
@@ -56,5 +54,3 @@
 </div>
 
 <jsp:include page="/WEB-INF/views/parts/footer.jsp"/>
-</body>
-</html>
