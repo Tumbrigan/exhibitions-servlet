@@ -20,6 +20,9 @@ public class CommandFactory {
         map.put("admin/users", new GetUsersPageCommand());
         map.put("admin/home", new GetAdminHomeCommand());
         map.put("admin/exhibitions", new GetExhibitionsPageCommand());
+        map.put("admin/create-exhibition", new CreateExhibitionCommand());
+        map.put("admin/delete-exhibition", new DeleteExhibitionCommand());
+
     }
 
     public static Command getCommand(String command) {

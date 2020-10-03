@@ -3,7 +3,6 @@ package com.kucher.dao;
 import com.kucher.model.Exhibition;
 import com.kucher.model.User;
 import com.kucher.util.QueryManager;
-import org.junit.Test;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -217,5 +216,84 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean addExhibition(Exhibition exhibition) {
+        String query = QueryManager.getQuery("insertExhibition");
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement statement =
+                     connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            statement.setInt(1, exhibition.getCategory().getId());
+            statement.setString(2, exhibition.getTopic());
+            statement.setString(3, exhibition.getStartDate());
+            statement.setString(4, exhibition.getEndDate());
+            statement.setString(5, exhibition.getStartTime());
+            statement.setString(6, exhibition.getEndTime());
+            statement.setInt(7, exhibition.getPrice());
+            statement.setInt(8, exhibition.getCapacity());
+            statement.setInt(9, exhibition.getRemainingSeats());
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+
+            try (ResultSet resultSet = statement.getGeneratedKeys()) {
+                while(resultSet.next()) {
+                    int id = resultSet.getInt(1);
+                    System.out.println(id);
+                    exhibition.setId(id);
+                }
+            }
+
+            System.out.println("Successful");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void deleteExhibitionById(int id) {
+        String query = QueryManager.getQuery("deleteExhibition");
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            int row = statement.executeUpdate();
+            if (row == 1) throw new SQLException("Exhibition is not deleted");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Exhibition.Hall> checkIfTimeIsBusy(Exhibition exhibition) {
+        List<Exhibition.Hall> halls = new ArrayList<>();
+
+        String startDate = exhibition.getStartDate();
+        String endDate = exhibition.getEndDate();
+        String startTime = exhibition.getStartTime();
+        String endTime = exhibition.getEndTime();
+
+        String query = QueryManager.getQuery("checkIfTimeIsBusy");
+
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, startDate);
+            statement.setString(2, endDate);
+            statement.setString(3, startTime);
+            statement.setString(4, endTime);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Exhibition.Hall hall = new Exhibition.Hall();
+                    hall.setId(resultSet.getInt("id"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return halls;
     }
 }
