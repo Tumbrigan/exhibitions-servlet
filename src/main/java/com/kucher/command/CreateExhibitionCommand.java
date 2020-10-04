@@ -8,20 +8,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 public class CreateExhibitionCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        request.getSession().removeAttribute("occupiedHallsByExhId");
+
+        String[] hallsID = request.getParameterValues("hall_id");
         Exhibition exhibition = getExhibition(request);
-
         DBManager dbManager = DBManager.getInstance();
-        boolean successfullyAdded = dbManager.addExhibition(exhibition);
+        Map<String, Integer> occupiedHallsByExhId = dbManager.getOccupiedHallMap(exhibition, hallsID);
+        System.out.println("occupiedHalls: " + occupiedHallsByExhId);
 
-        if (!successfullyAdded) {
-            request.setAttribute("successfullyAdded", false);
+        if (!occupiedHallsByExhId.isEmpty()) {
+            request.getSession().setAttribute("occupiedHallsByExhId", occupiedHallsByExhId);
+        } else {
+            dbManager.addExhibition(exhibition, hallsID);
         }
-
         return PathManager.getPath("admin.exhibitions.redirect");
     }
 

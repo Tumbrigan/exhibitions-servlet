@@ -18,24 +18,88 @@
         nav {
             background-color: #00796b;
         }
+
+        .page-footer.my-footer {
+            padding-top: 0;
+            background-color: #00796b;
+        }
+
+        .page-footer.my-footer .row {
+            margin-bottom: 0;
+        }
+
+        body {
+            display: grid;
+            grid-template-rows: 1fr auto;
+            height: 100vh;
+            padding-top: 64px;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+
+        .main {
+            display: block;
+            border: 1px solid red;
+            margin: 20px 0;
+        }
+
+        body {
+            padding-top: 64px;
+        }
+
+        nav {
+            position: fixed;
+            top: 0px;
+            left: 0;
+        }
+
+        .container {
+        }
+
+        .list-of-shows {
+            border: 1px solid red;
+            margin-bottom: 30px;
+        }
+
+        .show-item {
+            border: 1px solid red;
+        }
+
+        .show-item .row {
+            border: 1px solid red;
+        }
+
+        .show-item .col {
+            border: 1px solid red;
+        }
+
+        .show-create-form {
+            border: 1px solid red;
+        }
     </style>
 
     <title><fmt:message key="text.title"/></title>
 </head>
 <body>
-
-
-<nav>
-    <div class="nav-wrapper">
-        <div class="container">
-            <a class="brand-logo"><fmt:message key="text.title"/></a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="${pageContext.request.contextPath}/"><fmt:message key="text.main"/></a></li>
-                <li><a href="${pageContext.request.contextPath}/exhibitions/logout"><fmt:message key="text.logout"/></a>
-                </li>
-                <li><a href="${pageContext.request.contextPath}/exhibitions/language/en">English</a></li>
-                <li><a href="${pageContext.request.contextPath}/exhibitions/language/ua">Українська</a></li>
-            </ul>
+    <nav>
+        <div class="nav-wrapper">
+            <div class="container">
+                <a class="brand-logo"><fmt:message key="text.title"/></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="${pageContext.request.contextPath}/"><fmt:message key="text.main"/></a></li>
+                    <li><a href="${pageContext.request.contextPath}/exhibitions/logout"><fmt:message key="text.logout"/></a>
+                    </li>
+                    <li><a href="${pageContext.request.contextPath}/exhibitions/language/en">English</a></li>
+                    <li><a href="${pageContext.request.contextPath}/exhibitions/language/ua">Українська</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+
+    <%-- start main--%>
+    <main class="main-content" >

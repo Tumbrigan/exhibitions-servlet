@@ -20,6 +20,8 @@ select * from exhibitions.halls;
 
 select sum(capacity) as max from halls;
 
+select * from halls order by id;
+
 select * from halls;
 
 select halls.id, halls.name, halls.capacity from halls

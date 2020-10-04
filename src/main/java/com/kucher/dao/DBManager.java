@@ -6,7 +6,9 @@ import com.kucher.util.QueryManager;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -149,23 +151,17 @@ public class DBManager {
         exhibition.setRemainingSeats(remainingSeats);
         exhibition.setStatus(status);
 
-        List<Exhibition.Hall> hallList = getAllHallsByExhibition(exhibition, connection);
+        List<Exhibition.Hall> hallList = getAllHallsByExhibitionId(exhibition.getId(), connection);
         exhibition.setHallList(hallList);
     }
 
-    private List<Exhibition.Hall> getAllHallsByExhibition(Exhibition exhibition, Connection connection) {
+    private List<Exhibition.Hall> getAllHallsByExhibitionId(int exhibitionID, Connection connection) {
         List<Exhibition.Hall> hallList = new ArrayList<>();
         String query = QueryManager.getQuery("getAllHallsByExhibitionId");
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, exhibition.getId());
+            statement.setInt(1, exhibitionID);
             try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Exhibition.Hall hall = new Exhibition.Hall();
-                    hall.setId(resultSet.getInt("id"));
-                    hall.setName(resultSet.getString("name"));
-                    hall.setCapacity(resultSet.getInt("capacity"));
-                    hallList.add(hall);
-                }
+                getAllHalls(hallList, resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -218,7 +214,7 @@ public class DBManager {
         }
     }
 
-    public boolean addExhibition(Exhibition exhibition) {
+    public void addExhibition(Exhibition exhibition, String[] hallID) {
         String query = QueryManager.getQuery("insertExhibition");
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement statement =
@@ -235,25 +231,35 @@ public class DBManager {
             statement.setInt(9, exhibition.getRemainingSeats());
 
             int affectedRows = statement.executeUpdate();
-
             if (affectedRows == 0) {
                 throw new SQLException("Creating user failed, no rows affected.");
             }
-
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                while(resultSet.next()) {
+                while (resultSet.next()) {
                     int id = resultSet.getInt(1);
-                    System.out.println(id);
                     exhibition.setId(id);
                 }
             }
 
-            System.out.println("Successful");
-            return true;
+            fillHallsForExhibition(exhibition, hallID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+    }
+
+    private void fillHallsForExhibition(Exhibition exhibition, String[] hallIDs) {
+        String query = QueryManager.getQuery("fillHallsForExhibition");
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            for (String hallID : hallIDs) {
+                statement.setInt(1, exhibition.getId());
+                statement.setString(2, hallID);
+                statement.addBatch();
+            }
+            statement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void deleteExhibitionById(int id) {
@@ -268,32 +274,67 @@ public class DBManager {
         }
     }
 
-    public List<Exhibition.Hall> checkIfTimeIsBusy(Exhibition exhibition) {
-        List<Exhibition.Hall> halls = new ArrayList<>();
+    public Map<String, Integer> getOccupiedHallMap(Exhibition exhibition, String[] hallsID) {
+
+        Map<String, Integer> hallNameExhIdMap = new HashMap<>();
 
         String startDate = exhibition.getStartDate();
         String endDate = exhibition.getEndDate();
         String startTime = exhibition.getStartTime();
         String endTime = exhibition.getEndTime();
 
-        String query = QueryManager.getQuery("checkIfTimeIsBusy");
+        String query = QueryManager.getQuery("getBusyHall");
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, startDate);
-            statement.setString(2, endDate);
-            statement.setString(3, startTime);
-            statement.setString(4, endTime);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Exhibition.Hall hall = new Exhibition.Hall();
-                    hall.setId(resultSet.getInt("id"));
+            for (String id : hallsID) {
+                int i = 1;
+                statement.setString(i++, id);
+                statement.setString(i++, startDate);
+                statement.setString(i++, endDate);
+                statement.setString(i++, startDate);
+                statement.setString(i++, endDate);
+                statement.setString(i++, startTime);
+                statement.setString(i++, endTime);
+                statement.setString(i++, startTime);
+                statement.setString(i, endTime);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        String hallName = resultSet.getString("hall");
+                        int exhibitionID = resultSet.getInt("id");
+                        hallNameExhIdMap.put(hallName, exhibitionID);
+                    }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+        return hallNameExhIdMap;
+    }
+
+    public List<Exhibition.Hall> getHallList() {
+        String query = QueryManager.getQuery("getHallList");
+        List<Exhibition.Hall> halls = new ArrayList<>();
+        try (Connection connection = ConnectionManager.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            getAllHalls(halls, resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(halls.size());
         return halls;
+    }
+
+    private void getAllHalls(List<Exhibition.Hall> halls, ResultSet resultSet)
+            throws SQLException {
+        while (resultSet.next()) {
+            Exhibition.Hall hall = new Exhibition.Hall();
+            hall.setId(resultSet.getInt("id"));
+            hall.setName(resultSet.getString("name"));
+            hall.setCapacity(resultSet.getInt("capacity"));
+            halls.add(hall);
+        }
     }
 }

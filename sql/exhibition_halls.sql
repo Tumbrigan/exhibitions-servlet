@@ -28,6 +28,21 @@ select halls.name AS hall from exhibitions
 JOIN exhibition_halls ON (exhibitions.id = exhibition_halls.exhibition_id)
 JOIN halls ON (exhibition_halls.hall_id = halls.id)
 WHERE exhibitions.start_date >= '2020-09-12' AND exhibitions.end_date <= '2020-09-13'
-AND start_time >= '15:00' AND end_time <= '17:00';
+AND exhibitions.start_time between '11:00' AND '16:00'
+AND exhibitions.end_time between '11:00' AND '16:00';
 
-select * from exhibition_halls;
+select exhibitions.id, halls.name as name from exhibitions
+JOIN exhibition_halls ON (exhibitions.id = exhibition_halls.exhibition_id)
+JOIN halls ON (exhibition_halls.hall_id = halls.id)
+WHERE
+halls.id = 3
+AND
+(exhibitions.start_date between '2020-09-18' AND '2020-09-20'
+OR
+exhibitions.end_date between '2020-09-18' AND '2020-09-20')
+AND
+(exhibitions.start_time between '12:00' AND '14:00'
+OR
+exhibitions.end_time between '12:00' AND '14:00');
+
+select * from exhibition_halls order by exhibition_id;

@@ -9,14 +9,14 @@
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
 
 <style>
-    .wrapper {
+    .main-page-wrapper {
+        height: 100%;
         display: flex;
         align-items: center;
-        min-height: 75vh;
     }
 </style>
 
-<div class="wrapper">
+<div class="main-page-wrapper">
     <div class="container">
         <h3 class="flow-text"><fmt:message key="text.congratulations"/></h3>
         <form method="post" action="${pageContext.request.contextPath}/exhibitions/login">

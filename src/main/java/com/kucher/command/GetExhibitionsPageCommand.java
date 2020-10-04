@@ -17,10 +17,12 @@ public class GetExhibitionsPageCommand implements Command {
         DBManager dbManager = DBManager.getInstance();
         List<Exhibition> exhibitions = dbManager.getAllExhibitions();
         List<Exhibition.Category> categories = dbManager.getCategoryList();
+        List<Exhibition.Hall> halls = dbManager.getHallList();
         int maxSeatAmount = DBManager.getInstance().getMaxSeatAmount();
         request.setAttribute("exhibitions", exhibitions);
         request.setAttribute("categories", categories);
         request.setAttribute("maxSeatAmount", maxSeatAmount);
+        request.setAttribute("halls", halls);
         return PathManager.getPath("admin.exhibitions");
     }
 }
