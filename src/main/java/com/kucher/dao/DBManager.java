@@ -268,7 +268,7 @@ public class DBManager {
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             int row = statement.executeUpdate();
-            if (row == 1) throw new SQLException("Exhibition is not deleted");
+            if (row != 1) throw new SQLException("Exhibition is not deleted");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -300,7 +300,7 @@ public class DBManager {
                 statement.setString(i, endTime);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
-                        String hallName = resultSet.getString("hall");
+                        String hallName = resultSet.getString("name");
                         int exhibitionID = resultSet.getInt("id");
                         hallNameExhIdMap.put(hallName, exhibitionID);
                     }
@@ -323,7 +323,6 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(halls.size());
         return halls;
     }
 

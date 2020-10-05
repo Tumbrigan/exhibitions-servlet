@@ -120,7 +120,7 @@
                 </form>
 
                 <c:forEach items="${sessionScope.occupiedHallsByExhId}" var="entry">
-                    Key = ${entry.key}, value = ${entry.value}<br>
+                    The ${entry.key} hall is occupied by exhibition with ${entry.value} id<br>
                 </c:forEach>
                 ${requestScope.busyHalls}
             </div>
