@@ -10,91 +10,88 @@
 
 <div class="container">
     <div class="row">
+        <div class="col s8">
+            <h3><fmt:message key="text.admin.exhibitions.page"/></h3>
+        </div>
+    </div>
+
+    <div class="row">
         <!-- list-of-shows -->
         <div class="col s8">
-            <div>
-                <h3><fmt:message key="text.admin.exhibitions.page"/></h3>
-            </div>
             <div class="list-of-shows">
 
                 <c:forEach var="exhibition" items="${requestScope.exhibitions}">
-                    <ul>
-                        <li>
-                            <div class="show-item">
-                                <div class="row">
-                                    <div class="col s2">
-                                        ID: ${exhibition.id}
-                                    </div>
-                                    <div class="col s10">
-                                        Topic: ${exhibition.topic}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col s12">
-                                        Category: ${exhibition.category.name}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col s4">
-                                        Dates: ${exhibition.startDate} - ${exhibition.endDate}
-                                    </div>
-                                    <div class="col s4">
-                                        Time: ${exhibition.startTime} - ${exhibition.endTime}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col s3">
-                                        Price: ${exhibition.price}
-                                    </div>
-                                    <div class="col s3">
-                                        Places left: ${exhibition.remainingSeats}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <c:forEach var="hall" items="${exhibition.hallList}">
-                                        <ul>
-                                            <li>
-                                                <div class="col s3">
-                                                    Hall name: ${hall.name} <br>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </c:forEach>
-                                </div>
-                                <div class="row">
-                                    <div class="col s3">
-                                        Status: ${exhibition.status}<br>
-                                    </div>
-                                    <div class="col s3">
-                                        <form method="post"
-                                              action="${pageContext.request.contextPath}/exhibitions/admin/delete-exhibition">
-                                            <input type="number" hidden name="id" value="${exhibition.id}"/>
-                                            <input type="submit" class="btn"
-                                                   value="<fmt:message key="text.admin.delete.exhibition"/>"/>
-                                        </form>
-                                    </div>
-                                    <div class="col s3">
-                                        <form method="post"
-                                              action="${pageContext.request.contextPath}/exhibitions/admin/deactivate-exhibition">
-                                            <input type="number" hidden name="id" value="${exhibition.id}"/>
-                                            <input type="submit" class="btn"
-                                                   value="<fmt:message key="text.admin.deactivate.exhibition"/>"/>
-                                        </form>
-                                    </div>
-                                    <div class="col s3">
-                                        <form method="post"
-                                              action="${pageContext.request.contextPath}/exhibitions/admin/activate-exhibition">
-                                            <input type="number" hidden name="id" value="${exhibition.id}"/>
-                                            <input type="submit" class="btn"
-                                                   value="<fmt:message key="text.admin.activate.exhibition"/>"/>
-                                        </form>
-                                    </div>
-                                </div>
 
+                    <div class="show-item">
+                        <div class="row">
+                            <div class="col">
+                                <b>ID: ${exhibition.id}</b>
                             </div>
-                        </li>
-                    </ul>
-
+                            <div class="col">
+                                <div class="show-item-title">
+                                    Topic: ${exhibition.topic}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                Category: ${exhibition.category.name}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s4">
+                                Dates: ${exhibition.startDate} - ${exhibition.endDate}
+                            </div>
+                            <div class="col s4">
+                                Time: ${exhibition.startTime} - ${exhibition.endTime}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                Price: ${exhibition.price}
+                            </div>
+                            <div class="col s3">
+                                Places left: ${exhibition.remainingSeats}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s2">Hall name:</div>
+                            <c:forEach var="hall" items="${exhibition.hallList}">
+                                <div class="col s2">
+                                    <span>${hall.name}</span>
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                Status: ${exhibition.status}<br>
+                            </div>
+                            <div class="col s3">
+                                <form method="post"
+                                      action="${pageContext.request.contextPath}/exhibitions/admin/delete-exhibition">
+                                    <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                    <input type="submit" class="btn"
+                                           value="<fmt:message key="text.admin.delete.exhibition"/>"/>
+                                </form>
+                            </div>
+                            <div class="col s3">
+                                <form method="post"
+                                      action="${pageContext.request.contextPath}/exhibitions/admin/deactivate-exhibition">
+                                    <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                    <input type="submit" class="btn"
+                                           value="<fmt:message key="text.admin.deactivate.exhibition"/>"/>
+                                </form>
+                            </div>
+                            <div class="col s3">
+                                <form method="post"
+                                      action="${pageContext.request.contextPath}/exhibitions/admin/activate-exhibition">
+                                    <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                    <input type="submit" class="btn"
+                                           value="<fmt:message key="text.admin.activate.exhibition"/>"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </c:forEach>
             </div>
         </div>
@@ -102,6 +99,11 @@
         <div class="col s4">
             <div class="show-create-form">
                 <form action="${pageContext.request.contextPath}/exhibitions/admin/create-exhibition" method="post">
+
+
+
+
+
                     <label for="category"><fmt:message key="text.admin.select.category"/></label>
                     <select class="browser-default" id="category" name="categoryID">
                         <c:forEach var="category" items="${requestScope.categories}">
@@ -119,6 +121,12 @@
                            value="2020-09-29"
                            min="2020-09-29" max="2030-09-30">
                     <br>
+
+
+                    <input type="text" name="datetest" class="datepicker">
+
+
+
                     <label for="end"><fmt:message key="text.admin.select.endDate"/></label>
                     <input class="browser-default" type="date" id="end" name="exh-end"
                            value="2020-09-29"
@@ -145,7 +153,7 @@
                             <span>${hall.name} (${hall.capacity})</span><br>
                         </label>
                     </c:forEach>
-                    <input type="submit" value="<fmt:message key="text.admin.add.exhibition"/>">
+                    <input type="submit" class="btn" value="<fmt:message key="text.admin.add.exhibition"/>">
                 </form>
 
                 <c:forEach items="${sessionScope.occupiedHallsByExhId}" var="entry">

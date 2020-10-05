@@ -12,7 +12,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
     <!-- Compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            // datepicker
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                setDefaultDate: true,
+                defaultDate: new Date(),
+            });
+
+            // other code
+
+
+        });
+    </script>
 
     <style>
         nav {
@@ -44,7 +60,7 @@
 
         .main {
             display: block;
-            border: 1px solid red;
+            /*border: 1px solid red;*/
             margin: 20px 0;
         }
 
@@ -62,33 +78,50 @@
         }
 
         .list-of-shows {
-            border: 1px solid red;
+            /*border: 1px solid red;*/
             margin-bottom: 30px;
         }
 
         .show-item {
             border: 3px solid #00796b; /* Белая рамка */
             border-radius: 20px; /* Радиус скругления */
+            margin-bottom: 30px;
+            padding: 14px;
         }
 
         .show-item .row {
-            border: 1px solid red;
+            /*border: 1px solid red;*/
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+        }
+
+        .show-item form {
+            margin: 0;
+            padding: 0;
+        }
+
+        .show-item .row:not(:last-child) {
+            border-bottom: 1px solid #ccc;
+        }
+
+        .show-item-title {
+            font-size: 20px;
+            color: #333;
+            background-color: #dfdfdf;
+            border-radius: 4px;
+            padding: 3px 10px;
         }
 
         .show-item .col {
-            border: 1px solid red;
+            /*border: 1px solid red;*/
         }
 
         .show-create-form {
+            position: fixed;
             border: 3px solid #00796b; /* Белая рамка */
             border-radius: 20px; /* Радиус скругления */
-        }
-
-        .row {
             padding: 10px;
         }
-
-
     </style>
 
     <title><fmt:message key="text.title"/></title>
