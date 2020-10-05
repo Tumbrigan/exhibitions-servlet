@@ -50,22 +50,51 @@
                                         Places left: ${exhibition.remainingSeats}
                                     </div>
                                 </div>
-                                <c:forEach var="hall" items="${exhibition.hallList}">
-                                    <ul>
-                                        <li>
-                                            Hall name: ${hall.name} <br>
-                                        </li>
-                                    </ul>
-                                </c:forEach>
-                                Status: ${exhibition.status}<br>
+                                <div class="row">
+                                    <c:forEach var="hall" items="${exhibition.hallList}">
+                                        <ul>
+                                            <li>
+                                                <div class="col s3">
+                                                    Hall name: ${hall.name} <br>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </c:forEach>
+                                </div>
+                                <div class="row">
+                                    <div class="col s3">
+                                        Status: ${exhibition.status}<br>
+                                    </div>
+                                    <div class="col s3">
+                                        <form method="post"
+                                              action="${pageContext.request.contextPath}/exhibitions/admin/delete-exhibition">
+                                            <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                            <input type="submit" class="btn"
+                                                   value="<fmt:message key="text.admin.delete.exhibition"/>"/>
+                                        </form>
+                                    </div>
+                                    <div class="col s3">
+                                        <form method="post"
+                                              action="${pageContext.request.contextPath}/exhibitions/admin/deactivate-exhibition">
+                                            <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                            <input type="submit" class="btn"
+                                                   value="<fmt:message key="text.admin.deactivate.exhibition"/>"/>
+                                        </form>
+                                    </div>
+                                    <div class="col s3">
+                                        <form method="post"
+                                              action="${pageContext.request.contextPath}/exhibitions/admin/activate-exhibition">
+                                            <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                            <input type="submit" class="btn"
+                                                   value="<fmt:message key="text.admin.activate.exhibition"/>"/>
+                                        </form>
+                                    </div>
+                                </div>
+
                             </div>
                         </li>
                     </ul>
-                    <form method="post"
-                          action="${pageContext.request.contextPath}/exhibitions/admin/delete-exhibition">
-                        <input type="number" hidden name="id" value="${exhibition.id}"/>
-                        <input type="submit" value="<fmt:message key="text.admin.delete.exhibition"/>"/>
-                    </form>
+
                 </c:forEach>
             </div>
         </div>

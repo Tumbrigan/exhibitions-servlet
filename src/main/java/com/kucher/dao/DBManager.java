@@ -336,4 +336,28 @@ public class DBManager {
             halls.add(hall);
         }
     }
+
+    public void cancelExhibition(String id) {
+        String query = QueryManager.getQuery("cancelExhibition");
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, id);
+            int result = statement.executeUpdate();
+            if (result != 1) throw new SQLException("Exhibition is not canceled");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void activateExhibition(String id) {
+        String query = QueryManager.getQuery("activateExhibition");
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, id);
+            int result = statement.executeUpdate();
+            if (result != 1) throw new SQLException("Exhibition is not activated");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

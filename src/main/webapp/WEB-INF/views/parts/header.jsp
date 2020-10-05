@@ -67,7 +67,8 @@
         }
 
         .show-item {
-            border: 1px solid red;
+            border: 3px solid #00796b; /* Белая рамка */
+            border-radius: 20px; /* Радиус скругления */
         }
 
         .show-item .row {
@@ -79,8 +80,15 @@
         }
 
         .show-create-form {
-            border: 1px solid red;
+            border: 3px solid #00796b; /* Белая рамка */
+            border-radius: 20px; /* Радиус скругления */
         }
+
+        .row {
+            padding: 10px;
+        }
+
+
     </style>
 
     <title><fmt:message key="text.title"/></title>

@@ -22,6 +22,9 @@ public class CommandFactory {
         map.put("admin/exhibitions", new GetExhibitionsPageCommand());
         map.put("admin/create-exhibition", new CreateExhibitionCommand());
         map.put("admin/delete-exhibition", new DeleteExhibitionCommand());
+        map.put("admin/deactivate-exhibition", new CancelExhibitionCommand());
+        map.put("admin/activate-exhibition", new ActivateExhibitionCommand());
+
 
     }
 
