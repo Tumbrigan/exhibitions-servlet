@@ -30,6 +30,7 @@ public class CommandFactory {
         map.put("admin/delete-exhibition", new DeleteExhibitionCommand());
         map.put("admin/deactivate-exhibition", new CancelExhibitionCommand());
         map.put("admin/activate-exhibition", new ActivateExhibitionCommand());
+        map.put("admin/make-user-admin", new MakeUserAdminCommand());
 
 
     }

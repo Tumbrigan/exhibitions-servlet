@@ -9,20 +9,61 @@
 
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
 
-<div>
-    <h2><fmt:message key="text.admin.users.page"/></h2>
+<div class="page-wrapper">
+    <div class="container">
+        <div>
+            <h1 class="flow-text"><fmt:message key="text.admin.users.page"/></h1>
+        </div>
+        <div class="row">
+            <c:forEach var="user" items="${requestScope.users}">
+                <div class="user-item">
+                    <div class="row">
+                        <div class="col s9">
+                            <div class="row">
+                                <div class="col s6">
+                                    <fmt:message key="text.admin.users.id"/>:
+                                    <span>${user.id}</span>
+                                </div>
+                                <div class="col s6">
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s6">
+                                    <fmt:message key="text.admin.users.email"/>:
+                                    <span>${user.email}</span>
+                                </div>
+                                <div class="col s6">
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s6">
+                                    <fmt:message key="text.admin.users.role"/>:
+                                    <span>${user.role}</span>
+                                </div>
+                                <div class="col s6">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col3">
+                            <c:choose>
+                                <c:when test="${user.role.user}">
+                                    <form class="make-user" method="post"
+                                          action="${pageContext.request.contextPath}/exhibitions/admin/make-user-admin">
+                                        <input type="number" hidden name="id" value="${user.id}"/>
+                                        <input type="submit" class="btn"
+                                               value="<fmt:message key="text.admin.make.admin"/>"/>
+                                    </form>
+                                </c:when>
+                            </c:choose>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
 </div>
-
-<c:forEach var="user" items="${requestScope.users}">
-    <ul>
-        <li>
-            User ID: ${user.id} <br>
-            User e-mail: ${user.email} <br>
-            User status: ${user.role}
-        </li>
-    </ul>
-    <hr/>
-</c:forEach>
-
 
 <jsp:include page="/WEB-INF/views/parts/footer.jsp"/>

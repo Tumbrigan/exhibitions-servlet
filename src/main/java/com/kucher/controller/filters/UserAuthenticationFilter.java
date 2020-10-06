@@ -1,5 +1,6 @@
 package com.kucher.controller.filters;
 
+import com.kucher.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,10 +18,15 @@ public class UserAuthenticationFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession(false);
-
-        if (session == null || !"user".equals(session.getAttribute("role"))) {
-            LOGGER.info("user authentication processing");
+        if (session == null) {
+            LOGGER.info("session is null");
             request.getRequestDispatcher("/exhibitions/login").forward(request, response);
+        } else {
+            User.ROLE role = (User.ROLE) session.getAttribute("role");
+            LOGGER.info("role is " + role.toString());
+            if (role != User.ROLE.USER) {
+                request.getRequestDispatcher("/exhibitions/login").forward(request, response);
+            }
         }
         chain.doFilter(request, response);
     }

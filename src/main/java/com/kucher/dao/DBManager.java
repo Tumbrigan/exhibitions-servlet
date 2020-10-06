@@ -3,6 +3,8 @@ package com.kucher.dao;
 import com.kucher.model.Exhibition;
 import com.kucher.model.User;
 import com.kucher.util.QueryManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.Map;
 import static junit.framework.TestCase.assertTrue;
 
 public class DBManager {
+    private static final Logger LOGGER = LogManager.getLogger(DBManager.class.getName());
+
     private static DBManager dbManager;
 
     public static synchronized DBManager getInstance() {
@@ -359,5 +363,19 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean makeUserAdmin(int userID) {
+        String query = QueryManager.getQuery("makeUserAdmin");
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userID);
+            int result = statement.executeUpdate();
+            if (result != 1) throw new SQLException("User is already admin");
+        } catch (SQLException e) {
+            LOGGER.warn(e.getMessage());
+        }
+        LOGGER.info("User with ID " + userID + " is Admin");
+        return true;
     }
 }

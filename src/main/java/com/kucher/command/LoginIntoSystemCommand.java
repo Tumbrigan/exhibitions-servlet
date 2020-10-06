@@ -18,6 +18,16 @@ public class LoginIntoSystemCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        User.ROLE sessionRole = (User.ROLE)request.getSession().getAttribute("role");
+
+        if (sessionRole != null) {
+            if (sessionRole == User.ROLE.ADMIN) {
+                return PathManager.getPath("admin.home.redirect");
+            } else if (sessionRole == User.ROLE.USER) {
+                return PathManager.getPath("user.home.redirect");
+            }
+        }
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         HttpSession session = request.getSession();
@@ -29,13 +39,11 @@ public class LoginIntoSystemCommand implements Command {
                 String hash = PasswordManager.getPasswordHash(password);
                 if (hash.equals(user.getPassword())) {
                     User.ROLE role = user.getRole();
-
                     if (role == User.ROLE.ADMIN) {
-                        session.setAttribute("role", "admin");
+                        session.setAttribute("role", role);
                         return PathManager.getPath("admin.home.redirect");
-
-                    } else if (user.getRole() == User.ROLE.USER) {
-                        session.setAttribute("role", "user");
+                    } else if (role == User.ROLE.USER) {
+                        session.setAttribute("role", role);
                         return PathManager.getPath("user.home.redirect");
                     }
                 }

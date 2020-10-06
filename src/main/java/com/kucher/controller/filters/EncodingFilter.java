@@ -7,7 +7,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-@WebFilter
+@WebFilter("/*")
 public class EncodingFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger(EncodingFilter.class.getName());
 

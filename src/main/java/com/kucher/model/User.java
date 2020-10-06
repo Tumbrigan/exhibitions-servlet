@@ -56,8 +56,16 @@ public class User {
 
         private String role;
 
+        public String getRole() {
+            return role;
+        }
+
         ROLE(String role) {
             this.role = role;
+        }
+
+        public boolean isUser() {
+            return this == USER;
         }
     }
 }

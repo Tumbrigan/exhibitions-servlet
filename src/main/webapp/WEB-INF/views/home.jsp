@@ -8,7 +8,7 @@
 
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
 <div class="container">
-    <div class="row" align="center">
+    <div class="row">
         <h3 class="flow-text"><fmt:message key="text.congratulations"/></h3>
     </div>
     <div class="row">
@@ -70,32 +70,16 @@
                             </c:forEach>
                         </div>
                         <div class="row">
-                            <div class="col s3">
+                            <div class="col s9">
                                 <fmt:message key="text.exhibition.status"/>:
                                 <span>${exhibition.status}</span>
-                            </div>
-                            <div class="col s3">
-                                <form method="post"
-                                      action="${pageContext.request.contextPath}/exhibitions/admin/delete-exhibition">
-                                    <input type="number" hidden name="id" value="${exhibition.id}"/>
-                                    <input type="submit" class="btn"
-                                           value="<fmt:message key="text.admin.delete.exhibition"/>"/>
-                                </form>
-                            </div>
-                            <div class="col s3">
-                                <form method="post"
-                                      action="${pageContext.request.contextPath}/exhibitions/admin/deactivate-exhibition">
-                                    <input type="number" hidden name="id" value="${exhibition.id}"/>
-                                    <input type="submit" class="btn"
-                                           value="<fmt:message key="text.admin.deactivate.exhibition"/>"/>
-                                </form>
                             </div>
                             <div class="col s3">
                                 <form method="post"
                                       action="${pageContext.request.contextPath}/exhibitions/admin/activate-exhibition">
                                     <input type="number" hidden name="id" value="${exhibition.id}"/>
                                     <input type="submit" class="btn"
-                                           value="<fmt:message key="text.admin.activate.exhibition"/>"/>
+                                           value="<fmt:message key="text.exhibition.buy"/>"/>
                                 </form>
                             </div>
                         </div>
@@ -105,19 +89,29 @@
         </div>
         <div class="col s4">
             <div class="login-register-window">
-                <div>
-                    <form method="post" action="${pageContext.request.contextPath}/exhibitions/login">
-                        <input class="btn" type="submit" value="<fmt:message key="text.enter"/>">
-                    </form>
-                </div>
-                <div>
-                    <form method="post" action="${pageContext.request.contextPath}/exhibitions/registration">
-                        <input class="btn" type="submit" value= <fmt:message key="text.registration"/>>
-                    </form>
-                </div>
+                <c:choose>
+                    <c:when test="${empty sessionScope.role}">
+                        <div>
+                            <form method="post" action="${pageContext.request.contextPath}/exhibitions/login">
+                                <input class="btn" type="submit" value="<fmt:message key="text.enter"/>">
+                            </form>
+                        </div>
+                        <div>
+                            <form method="post" action="${pageContext.request.contextPath}/exhibitions/registration">
+                                <input class="btn" type="submit" value="<fmt:message key="text.registration"/>">
+                            </form>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div>
+                            <form method="post" action="${pageContext.request.contextPath}/exhibitions/home">
+                                <input class="btn" type="submit" value="<fmt:message key="text.home"/>">
+                            </form>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>
-</div>
 
 <jsp:include page="/WEB-INF/views/parts/footer.jsp"/>
