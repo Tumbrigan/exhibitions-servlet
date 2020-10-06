@@ -8,9 +8,8 @@
 
 
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
-<br><br>
 
-<div class="wrapper">
+<div class="page-wrapper">
     <div class="container">
 
         <h1 class="flow-text"><fmt:message key="text.enter.login.and.password"/></h1>

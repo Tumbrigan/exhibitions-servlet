@@ -6,26 +6,4 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="text"/>
 
-<jsp:include page="/WEB-INF/views/parts/header.jsp"/>
-
-<style>
-    .main-page-wrapper {
-        height: 100%;
-        display: flex;
-        align-items: center;
-    }
-</style>
-
-<div class="main-page-wrapper">
-    <div class="container">
-        <h3 class="flow-text"><fmt:message key="text.congratulations"/></h3>
-        <form method="post" action="${pageContext.request.contextPath}/exhibitions/login">
-            <input class="btn" type="submit" value="<fmt:message key="text.enter"/>">
-        </form>
-        <form method="post" action="${pageContext.request.contextPath}/exhibitions/registration">
-            <input class="btn" type="submit" value= <fmt:message key="text.registration"/>>
-        </form>
-    </div>
-</div>
-
-<jsp:include page="/WEB-INF/views/parts/footer.jsp"/>
+<c:redirect url="${pageContext.request.contextPath}/exhibitions/main-page"/>

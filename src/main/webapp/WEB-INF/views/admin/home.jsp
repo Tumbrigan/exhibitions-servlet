@@ -10,7 +10,7 @@
 </head>
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
 
-<div class="wrapper">
+<div class="page-wrapper">
     <div class="container">
 
         <h1 class="flow-text"><fmt:message key="text.admin.homepage.title"/></h1>

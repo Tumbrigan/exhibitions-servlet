@@ -1,16 +1,22 @@
 package com.kucher.command;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandFactory {
     private static Map<String, Command> map;
+    private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class.getName());
+
 
     private CommandFactory() {
     }
 
     static {
         map = new HashMap<>();
+        map.put("main-page", new GetMainPageCommand());
         map.put("registration", new GetRegistrationPageCommand());
         map.put("register-user", new RegisterNewUserCommand());
         map.put("login", new GetLoginPageCommand());
@@ -29,6 +35,7 @@ public class CommandFactory {
     }
 
     public static Command getCommand(String command) {
+        LOGGER.info(command);
         return map.get(command);
     }
 }

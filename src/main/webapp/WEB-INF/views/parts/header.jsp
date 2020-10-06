@@ -64,6 +64,12 @@
             margin: 20px 0;
         }
 
+        .page-wrapper {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
         body {
             padding-top: 64px;
         }
@@ -95,6 +101,13 @@
             padding-bottom: 5px;
         }
 
+        .show-item span {
+            color: #333;
+            background-color: #dfdfdf;
+            border-radius: 5px;
+            padding: 3px 10px;
+        }
+
         .show-item form {
             margin: 0;
             padding: 0;
@@ -105,10 +118,11 @@
         }
 
         .show-item-title {
+            font-weight: bold;
             font-size: 20px;
             color: #333;
             background-color: #dfdfdf;
-            border-radius: 4px;
+            border-radius: 5px;
             padding: 3px 10px;
         }
 
@@ -122,6 +136,13 @@
             border-radius: 20px; /* Радиус скругления */
             padding: 10px;
         }
+
+        .login-register-window {
+            position: fixed;
+            /*border: 3px solid #00796b; !* Белая рамка *!*/
+            /*border-radius: 20px; !* Радиус скругления *!*/
+            margin-left: 30px;
+        }
     </style>
 
     <title><fmt:message key="text.title"/></title>
@@ -132,7 +153,7 @@
             <div class="container">
                 <a class="brand-logo"><fmt:message key="text.title"/></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="${pageContext.request.contextPath}/"><fmt:message key="text.main"/></a></li>
+                    <li><a href="${pageContext.request.contextPath}/exhibitions/main-page"><fmt:message key="text.main"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/exhibitions/logout"><fmt:message key="text.logout"/></a>
                     </li>
                     <li><a href="${pageContext.request.contextPath}/exhibitions/language/en">English</a></li>
