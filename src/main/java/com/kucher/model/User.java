@@ -67,5 +67,9 @@ public class User {
         public boolean isUser() {
             return this == USER;
         }
+
+        public boolean isAdmin() {
+            return this == ADMIN;
+        }
     }
 }

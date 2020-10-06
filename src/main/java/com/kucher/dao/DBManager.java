@@ -378,4 +378,18 @@ public class DBManager {
         LOGGER.info("User with ID " + userID + " is Admin");
         return true;
     }
+
+    public boolean makeAdminUser(int userID) {
+        String query = QueryManager.getQuery("makeAdminUser");
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userID);
+            int result = statement.executeUpdate();
+            if (result != 1) throw new SQLException("Admin is already user");
+        } catch (SQLException e) {
+            LOGGER.warn(e.getMessage());
+        }
+        LOGGER.info("Admin with ID " + userID + " is User");
+        return true;
+    }
 }

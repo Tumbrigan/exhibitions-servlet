@@ -1,6 +1,7 @@
 package com.kucher.command;
 
 import com.kucher.dao.DBManager;
+import com.kucher.model.User;
 import com.kucher.util.PasswordManager;
 import com.kucher.util.PathManager;
 
@@ -29,7 +30,7 @@ public class RegisterNewUserCommand implements Command {
         String hash = PasswordManager.getPasswordHash(password);
 
         dbManager.createUser(email, hash);
-        session.setAttribute("role", "user");
+        session.setAttribute("role", User.ROLE.USER);
         return PathManager.getPath("user.home.redirect");
     }
 }

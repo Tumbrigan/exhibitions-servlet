@@ -57,6 +57,14 @@
                                                value="<fmt:message key="text.admin.make.admin"/>"/>
                                     </form>
                                 </c:when>
+                                <c:when test="${user.role.admin and user.id != 1}">
+                                    <form class="make-user" method="post"
+                                          action="${pageContext.request.contextPath}/exhibitions/admin/make-admin-user">
+                                        <input type="number" hidden name="id" value="${user.id}"/>
+                                        <input type="submit" class="btn"
+                                               value="<fmt:message key="text.admin.make.user"/>"/>
+                                    </form>
+                                </c:when>
                             </c:choose>
                         </div>
                     </div>

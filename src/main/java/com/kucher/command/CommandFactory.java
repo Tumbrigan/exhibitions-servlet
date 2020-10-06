@@ -31,6 +31,7 @@ public class CommandFactory {
         map.put("admin/deactivate-exhibition", new CancelExhibitionCommand());
         map.put("admin/activate-exhibition", new ActivateExhibitionCommand());
         map.put("admin/make-user-admin", new MakeUserAdminCommand());
+        map.put("admin/make-admin-user", new MakeAdminUserCommand());
 
 
     }
