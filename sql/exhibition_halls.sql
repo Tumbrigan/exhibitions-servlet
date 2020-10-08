@@ -37,12 +37,12 @@ JOIN halls ON (exhibition_halls.hall_id = halls.id)
 WHERE
 halls.id = 3
 AND
-(exhibitions.start_date between '2020-09-18' AND '2020-09-20'
+(exhibitions.start_date between '2020-09-12' AND '2020-09-13'
 OR
-exhibitions.end_date between '2020-09-18' AND '2020-09-20')
+exhibitions.end_date between '2020-09-12' AND '2020-09-13')
 AND
-(exhibitions.start_time between '12:00' AND '14:00'
+(exhibitions.start_time between '12:00' AND '17:00'
 OR
-exhibitions.end_time between '12:00' AND '14:00');
+exhibitions.end_time between '12:00' AND '17:00');
 
 select * from exhibition_halls order by exhibition_id;

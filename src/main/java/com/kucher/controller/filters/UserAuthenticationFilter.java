@@ -18,8 +18,8 @@ public class UserAuthenticationFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession(false);
-        if (session == null) {
-            LOGGER.info("session is null");
+        if (session == null || session.getAttribute("role")  == null) {
+            LOGGER.info("there is no one user role attribute");
             request.getRequestDispatcher("/exhibitions/login").forward(request, response);
         } else {
             User.ROLE role = (User.ROLE) session.getAttribute("role");

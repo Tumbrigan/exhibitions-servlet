@@ -79,14 +79,6 @@
                             </div>
                             <div class="col s3">
                                 <form method="post"
-                                      action="${pageContext.request.contextPath}/exhibitions/admin/delete-exhibition">
-                                    <input type="number" hidden name="id" value="${exhibition.id}"/>
-                                    <input type="submit" class="btn"
-                                           value="<fmt:message key="text.admin.delete.exhibition"/>"/>
-                                </form>
-                            </div>
-                            <div class="col s3">
-                                <form method="post"
                                       action="${pageContext.request.contextPath}/exhibitions/admin/deactivate-exhibition">
                                     <input type="number" hidden name="id" value="${exhibition.id}"/>
                                     <input type="submit" class="btn"
@@ -99,6 +91,14 @@
                                     <input type="number" hidden name="id" value="${exhibition.id}"/>
                                     <input type="submit" class="btn"
                                            value="<fmt:message key="text.admin.activate.exhibition"/>"/>
+                                </form>
+                            </div>
+                            <div class="col s3">
+                                <form method="post"
+                                      action="${pageContext.request.contextPath}/exhibitions/admin/delete-exhibition">
+                                    <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                    <input type="submit" class="btn"
+                                           value="<fmt:message key="text.admin.delete.exhibition"/>"/>
                                 </form>
                             </div>
                         </div>

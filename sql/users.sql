@@ -23,3 +23,6 @@ SELECT * FROM exhibitions.users;
 -- desc users;
 
 select email from users where email='hvac.kucher.ihor@gmail.com';
+
+UPDATE users SET role='ADMIN' where id=10;
+UPDATE users SET role='USER' where id>1;
