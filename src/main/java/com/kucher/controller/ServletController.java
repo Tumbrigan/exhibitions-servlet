@@ -13,7 +13,6 @@ import java.io.IOException;
 public class ServletController extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(ServletController.class.getName());
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.info("doGet: " + req.getRequestURI());
@@ -22,7 +21,7 @@ public class ServletController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.info("doGet" + req.getRequestURI());
+        LOGGER.info("doPost" + req.getRequestURI());
         processRequest(req, resp);
     }
 
@@ -34,9 +33,11 @@ public class ServletController extends HttpServlet {
             LOGGER.info("command: " + command);
         }
         String page = CommandFactory.getCommand(command).execute(request, response);
-        if (page.contains("redirect:")) {
+        if (page == null) {
+            response.sendError(404);
+        } else if (page.contains("redirect:")) {
             LOGGER.info("redirect to page: " + page);
-            response.sendRedirect(page.replace("redirect:",""));
+            response.sendRedirect(page.replace("redirect:", ""));
         } else {
             LOGGER.info("forward to page: " + page);
             request.getRequestDispatcher(page).forward(request, response);
@@ -44,6 +45,6 @@ public class ServletController extends HttpServlet {
     }
 
     private String cleanPath(String path) {
-        return  path.replaceAll(".*/exhibitions/", "");
+        return path.replaceAll(".*/exhibitions/", "");
     }
 }

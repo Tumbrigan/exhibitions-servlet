@@ -32,12 +32,12 @@ public class CommandFactory {
         map.put("admin/activate-exhibition", new ActivateExhibitionCommand());
         map.put("admin/make-user-admin", new MakeUserAdminCommand());
         map.put("admin/make-admin-user", new MakeAdminUserCommand());
-
-
     }
 
-    public static Command getCommand(String command) {
-        LOGGER.info(command);
-        return map.get(command);
+    public static Command getCommand(String commandStr) {
+        LOGGER.info("commandStr: " + commandStr);
+        Command command = map.getOrDefault(commandStr, new Error404Command());
+        LOGGER.info("command: " + command.getClass().getName());
+        return command;
     }
 }

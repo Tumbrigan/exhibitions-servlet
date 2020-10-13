@@ -70,6 +70,19 @@
             /*align-items: center;*/
         }
 
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+
+        .error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .flow-text {
             text-indent: 2%;
         }

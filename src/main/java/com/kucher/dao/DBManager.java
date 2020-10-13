@@ -5,6 +5,7 @@ import com.kucher.model.User;
 import com.kucher.util.QueryManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Test;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static junit.framework.TestCase.assertTrue;
+
 
 public class DBManager {
     private static final Logger LOGGER = LogManager.getLogger(DBManager.class.getName());
@@ -391,5 +393,14 @@ public class DBManager {
         }
         LOGGER.info("Admin with ID " + userID + " is User");
         return true;
+    }
+
+    @Test
+    public void testIsolation() {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            System.out.println(connection.getTransactionIsolation());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

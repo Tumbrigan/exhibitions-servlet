@@ -52,7 +52,9 @@
                                 <c:when test="${user.role.user}">
                                     <form class="make-user" method="post"
                                           action="${pageContext.request.contextPath}/exhibitions/admin/make-user-admin">
-                                        <input type="number" hidden name="id" value="${user.id}"/>
+                                        <label>
+                                            <input type="number" hidden name="id" value="${user.id}"/>
+                                        </label>
                                         <input type="submit" class="btn"
                                                value="<fmt:message key="text.admin.make.admin"/>"/>
                                     </form>
@@ -60,7 +62,9 @@
                                 <c:when test="${user.role.admin and user.id != 1}">
                                     <form class="make-user" method="post"
                                           action="${pageContext.request.contextPath}/exhibitions/admin/make-admin-user">
-                                        <input type="number" hidden name="id" value="${user.id}"/>
+                                        <label>
+                                            <input type="number" hidden name="id" value="${user.id}"/>
+                                        </label>
                                         <input type="submit" class="btn"
                                                value="<fmt:message key="text.admin.make.user"/>"/>
                                     </form>

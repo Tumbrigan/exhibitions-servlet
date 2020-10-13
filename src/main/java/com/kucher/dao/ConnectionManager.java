@@ -20,7 +20,9 @@ public class ConnectionManager {
         if (datasource == null) {
             initializeDataSource();
         }
-        return datasource.getConnection();
+        Connection connection = datasource.getConnection();
+        connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+        return connection;
     }
 
     private static void initializeDataSource() {

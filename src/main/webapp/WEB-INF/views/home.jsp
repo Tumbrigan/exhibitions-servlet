@@ -20,10 +20,10 @@
                     <div class="show-item">
                         <div class="row">
                             <div class="col s1">
-                                <b>ID: ${exhibition.id}</b>
+                                <strong>ID: ${exhibition.id}</strong>
                             </div>
                             <div class="col s11">
-                                <b><fmt:message key="text.exhibition.topic"/>:</b>
+                                <strong><fmt:message key="text.exhibition.topic"/>:</strong>
                                 <div class="show-item-title">
                                         ${exhibition.topic}
                                 </div>
@@ -77,7 +77,9 @@
                             <div class="col s3">
                                 <form method="post"
                                       action="${pageContext.request.contextPath}/exhibitions/admin/activate-exhibition">
-                                    <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                    <label>
+                                        <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                    </label>
                                     <input type="submit" class="btn"
                                            value="<fmt:message key="text.exhibition.buy"/>"/>
                                 </form>

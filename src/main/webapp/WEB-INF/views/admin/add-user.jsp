@@ -1,9 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-<head>
-    <title><fmt:message key="text.admin.homepage.title"/></title>
-</head>
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
 
 <div>
