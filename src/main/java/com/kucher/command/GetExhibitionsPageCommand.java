@@ -22,7 +22,6 @@ public class GetExhibitionsPageCommand implements Command {
         int page = 1;
         int recordsPerPage = 2;
         if (request.getParameter("page") != null) {
-            LOGGER.info("request parameter 'page' is not null");
             page = Integer.parseInt(request.getParameter("page"));
             LOGGER.info("request parameter 'page' is not null and equals " + page);
         }

@@ -22,7 +22,6 @@ public class GetMainPageCommand implements Command {
         int page = 1;
         int recordsPerPage = 2;
         if (request.getParameter("page") != null) {
-            LOGGER.info("request parameter 'page' is not null");
             page = Integer.parseInt(request.getParameter("page"));
             LOGGER.info("request parameter 'page' is not null and equals " + page);
         }
@@ -42,19 +41,5 @@ public class GetMainPageCommand implements Command {
         String path = PathManager.getPath("main.home");
         LOGGER.info("will be returned: " + path);
         return path;
-
-/*
-        DBManager dbManager = DBManager.getInstance();
-        List<Exhibition> exhibitions = dbManager.getAllExhibitions();
-
-
-        int currentPage = 0;
-        request.setAttribute("exhibitions", exhibitions);
-        request.setAttribute("currentPage", currentPage);
-        String path = PathManager.getPath("main.home");
-        LOGGER.info("will be returned: " + path);
-        return path;
-
- */
     }
 }
