@@ -19,15 +19,32 @@ public class GetExhibitionsPageCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         LOGGER.info("inside execute()");
+        int page = 1;
+        int recordsPerPage = 2;
+        if (request.getParameter("page") != null) {
+            LOGGER.info("request parameter 'page' is not null");
+            page = Integer.parseInt(request.getParameter("page"));
+            LOGGER.info("request parameter 'page' is not null and equals " + page);
+        }
         DBManager dbManager = DBManager.getInstance();
-        List<Exhibition> exhibitions = dbManager.getAllExhibitions();
-        List<Exhibition.Category> categories = dbManager.getCategoryList();
-        List<Exhibition.Hall> halls = dbManager.getHallList();
-        int maxSeatAmount = DBManager.getInstance().getMaxSeatAmount();
-        request.setAttribute("exhibitions", exhibitions);
-        request.setAttribute("categories", categories);
-        request.setAttribute("maxSeatAmount", maxSeatAmount);
-        request.setAttribute("halls", halls);
+        List<Exhibition> exhibitions = dbManager.getAllExhibitions((page - 1) * recordsPerPage,
+                recordsPerPage);
+        int noOfRecords = dbManager.getNoOfExhibitions();
+
+        if (noOfRecords < 1) {
+            request.setAttribute("noOneExhibition", true);
+        } else {
+            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+            request.setAttribute("noOfPages", noOfPages);
+            request.setAttribute("currentPage", page);
+            List<Exhibition.Category> categories = dbManager.getCategoryList();
+            List<Exhibition.Hall> halls = dbManager.getHallList();
+            int maxSeatAmount = DBManager.getInstance().getMaxSeatAmount();
+            request.setAttribute("exhibitions", exhibitions);
+            request.setAttribute("categories", categories);
+            request.setAttribute("maxSeatAmount", maxSeatAmount);
+            request.setAttribute("halls", halls);
+        }
         return PathManager.getPath("admin.exhibitions");
     }
 }

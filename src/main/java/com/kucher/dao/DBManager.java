@@ -5,16 +5,12 @@ import com.kucher.model.User;
 import com.kucher.util.QueryManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static junit.framework.TestCase.assertTrue;
-
 
 public class DBManager {
     private static final Logger LOGGER = LogManager.getLogger(DBManager.class.getName());
@@ -109,21 +105,25 @@ public class DBManager {
         return -666;
     }
 
-    public List<Exhibition> getAllExhibitions() {
+    public List<Exhibition> getAllExhibitions(int offset, int limit) {
         List<Exhibition> exhibitions = new ArrayList<>();
         String query = QueryManager.getQuery("getAllExhibitions");
         try (Connection connection = ConnectionManager.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet result = statement.executeQuery(query)) {
-            while (result.next()) {
-                Exhibition exhibition = new Exhibition();
-                fillExhibition(exhibition, connection, result);
-                exhibitions.add(exhibition);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    Exhibition exhibition = new Exhibition();
+                    fillExhibition(exhibition, connection, result);
+                    exhibitions.add(exhibition);
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
 //            throw ex;
         }
+        LOGGER.info("got " + exhibitions.size() + " exhibitions from DB");
         return exhibitions;
     }
 
@@ -395,12 +395,20 @@ public class DBManager {
         return true;
     }
 
-    @Test
-    public void testIsolation() {
-        try (Connection connection = ConnectionManager.getConnection()) {
-            System.out.println(connection.getTransactionIsolation());
+    public int getNoOfExhibitions() {
+        String query = QueryManager.getQuery("getExhibitionCount");
+        try (Connection connection = ConnectionManager.getConnection();
+             Statement statement = connection.createStatement()) {
+            try (ResultSet result = statement.executeQuery(query)) {
+                if (result.next()) {
+                    int count = result.getInt("count");
+                    LOGGER.info("count of exhibitions: " + count);
+                    return count;
+                }
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.info("SQL exception in getNoOfExhibitions method: " + e);
         }
+        return -1;
     }
 }

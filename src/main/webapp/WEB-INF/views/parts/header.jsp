@@ -11,9 +11,14 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+<%--To be able to use these icons, you must include this line in the <head>portion of your HTML code --%>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <!-- Compiled and minified JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
 
     <script>
         $(document).ready(function(){
@@ -180,6 +185,10 @@
         }
 
         .make-user {
+            text-align: center;
+        }
+
+        .pagination {
             text-align: center;
         }
     </style>

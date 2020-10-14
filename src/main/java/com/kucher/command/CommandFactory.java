@@ -37,7 +37,7 @@ public class CommandFactory {
     public static Command getCommand(String commandStr) {
         LOGGER.info("commandStr: " + commandStr);
         Command command = map.getOrDefault(commandStr, new Error404Command());
-        LOGGER.info("command: " + command.getClass().getName());
+        LOGGER.info("command: " + command.getClass().getSimpleName());
         return command;
     }
 }

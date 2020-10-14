@@ -19,10 +19,16 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET utf8mb4;
 
 insert into exhibition_halls values (1, 1);
-insert into exhibition_halls values (1, 2);
+insert into exhibition_halls values (1, 3);
 
+insert into exhibition_halls values (2, 2);
 insert into exhibition_halls values (2, 3);
-insert into exhibition_halls values (2, 4);
+
+insert into exhibition_halls values (3, 1);
+insert into exhibition_halls values (3, 4);
+
+insert into exhibition_halls values (4, 2);
+insert into exhibition_halls values (4, 4);
 
 select halls.name AS hall from exhibitions
 JOIN exhibition_halls ON (exhibitions.id = exhibition_halls.exhibition_id)

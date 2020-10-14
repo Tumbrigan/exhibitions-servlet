@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
 <div class="container">
     <div class="error">
-        <img src="${pageContext.request.contextPath}/images/404-UFO.png" alt="404 not found"/>
+        <img src="${pageContext.request.contextPath}/resources/images/404-UFO.png" alt="404 not found"/>
     </div>
 </div>
 <jsp:include page="/WEB-INF/views/parts/footer.jsp"/>

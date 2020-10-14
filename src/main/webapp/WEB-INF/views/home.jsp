@@ -12,9 +12,8 @@
         <h3 class="flow-text"><fmt:message key="text.congratulations"/></h3>
     </div>
     <div class="row">
-        <%--           list of exhibitions --%>
+        <%-- list of exhibitions --%>
         <div class="col s8">
-
             <div class="list-of-shows">
                 <c:forEach var="exhibition" items="${requestScope.exhibitions}">
                     <div class="show-item">
@@ -88,7 +87,40 @@
                     </div>
                 </c:forEach>
             </div>
+            <%--pagination--%>
+            <ul class="pagination">
+                <c:if test="${requestScope.currentPage ne 1}">
+                    <li class="disabled"><a
+                            href="${pageContext.request.contextPath}/exhibitions/main-page?page=1"><i
+                            class="material-icons">chevron_left</i></a></li>
+                </c:if>
+
+                <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
+                    <c:choose>
+                        <c:when test="${requestScope.currentPage eq i}">
+                            <li class="disabled"><a
+                                    href="${pageContext.request.contextPath}/exhibitions/main-page?page=${i}">${i}</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="waves-effect"><a
+                                    href="${pageContext.request.contextPath}/exhibitions/main-page?page=${i}">${i}</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+
+                <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
+                    <li class="waves-effect">
+                        <a href="${pageContext.request.contextPath}/exhibitions/main-page?page=${requestScope.currentPage + 1}">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </li>
+                </c:if>
+
+            </ul>
         </div>
+        <%--login and register--%>
         <div class="col s4">
             <div class="login-register-window">
                 <c:choose>
