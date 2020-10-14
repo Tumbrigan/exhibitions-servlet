@@ -12,8 +12,10 @@
 
 <div class="page-wrapper">
     <div class="container">
+        <div class="row">
+            <h3 class="flow-text"><fmt:message key="text.admin.homepage.title"/></h3>
+        </div>
 
-        <h1 class="flow-text"><fmt:message key="text.admin.homepage.title"/></h1>
 
         <form method="post" action="${pageContext.request.contextPath}/exhibitions/admin/users">
             <input class="btn" type="submit" value="<fmt:message key="text.admin.users.page"/>">

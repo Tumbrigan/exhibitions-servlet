@@ -6,7 +6,6 @@ import com.kucher.util.PasswordManager;
 import com.kucher.util.PathManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +21,17 @@ public class LoginIntoSystemCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+
+        if (request.getSession() != null &&
+        request.getSession().getAttribute("role") != null) {
+            User.ROLE role = (User.ROLE) request.getSession().getAttribute("role");
+            if (role == User.ROLE.ADMIN) {
+                return PathManager.getPath("admin.home.redirect");
+            } else if (role == User.ROLE.USER) {
+                return PathManager.getPath("user.home.redirect");
+            }
+        }
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         HttpSession session = request.getSession();

@@ -5,12 +5,22 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="text"/>
 
-
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
+<div class="page-wrapper">
+    <div class="container">
+        <div class="row">
+            <h3 class="flow-text"><fmt:message key="text.user.homepage.title"/></h3>
+        </div>
 
-<div>
-    <h3><fmt:message key="text.user.homepage.title"/></h3>
+        <c:if test="${(requestScope.ticketsList eq null) or
+        (requestScope.ticketsList.size eq 0)}">
+            <blockquote>
+                <fmt:message key="text.user.homepage.no-one-ticket"/>
+            </blockquote>
+            <blockquote>
+                <fmt:message key="text.user.homepage.where-get-ticket"/>
+            </blockquote>
+        </c:if>
+    </div>
 </div>
-
 <jsp:include page="/WEB-INF/views/parts/footer.jsp"/>
-
