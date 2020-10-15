@@ -3,6 +3,8 @@ package com.kucher.command;
 import com.kucher.dao.DBManager;
 import com.kucher.model.Exhibition;
 import com.kucher.util.PathManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,16 +13,19 @@ import java.io.IOException;
 import java.util.Map;
 
 public class CreateExhibitionCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(CreateExhibitionCommand.class.getName());
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+
         request.getSession().removeAttribute("occupiedHallsByExhId");
 
         String[] hallsID = request.getParameterValues("hall_id");
         Exhibition exhibition = getExhibition(request);
         DBManager dbManager = DBManager.getInstance();
         Map<String, Integer> occupiedHallsByExhId = dbManager.getOccupiedHallMap(exhibition, hallsID);
-        System.out.println("occupiedHalls: " + occupiedHallsByExhId);
+        LOGGER.info("occupiedHalls: " + occupiedHallsByExhId);
 
         if (!occupiedHallsByExhId.isEmpty()) {
             request.getSession().setAttribute("occupiedHallsByExhId", occupiedHallsByExhId);

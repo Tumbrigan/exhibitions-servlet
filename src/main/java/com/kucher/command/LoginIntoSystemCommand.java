@@ -48,6 +48,9 @@ public class LoginIntoSystemCommand implements Command {
                 if (hash.equals(user.getPassword())) {
                     User.ROLE role = user.getRole();
                     LOGGER.info("role: " + role);
+                    int id = user.getId();
+                    session.setAttribute("userID", id);
+                    LOGGER.info("userID: " + id);
                     if (role == User.ROLE.ADMIN) {
                         session.setAttribute("role", role);
                         return PathManager.getPath("admin.home.redirect");

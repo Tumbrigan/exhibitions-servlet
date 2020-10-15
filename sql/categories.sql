@@ -1,10 +1,10 @@
 DROP TABLE IF EXISTS exhibitions.categories ;
 
 CREATE TABLE IF NOT EXISTS exhibitions.categories (
-  id INT NOT NULL AUTO_INCREMENT,
+  category_id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL UNIQUE,
   description VARCHAR(255) NULL,
-  PRIMARY KEY (id))
+  PRIMARY KEY (category_id))
 ENGINE = InnoDB;
 
 insert into categories (name) values ('sport');
@@ -17,3 +17,5 @@ select * from categories order by name;
 -- RENAME TABLE topics TO categories;
 
 SELECT * FROM categories WHERE id = 1;
+
+alter table categories rename column id TO category_id;

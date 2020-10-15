@@ -17,54 +17,54 @@
         <!-- list-of-shows -->
         <div class="col s8">
             <div class="list-of-shows">
-                <c:forEach var="exhibition" items="${requestScope.exhibitions}">
+                <c:forEach var="order" items="${requestScope.exhibitions}">
                     <div class="show-item">
                         <div class="row">
                             <div class="col s1">
-                                <b>ID: ${exhibition.id}</b>
+                                <b>ID: ${order.id}</b>
                             </div>
                             <div class="col s11">
                                 <b><fmt:message key="text.exhibition.topic"/>:</b>
                                 <div class="show-item-title">
-                                        ${exhibition.topic}
+                                        ${order.topic}
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12">
                                 <fmt:message key="text.exhibition.category"/>:
-                                <span>${exhibition.category.name}</span>
+                                <span>${order.category.name}</span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s6">
                                 <fmt:message key="text.exhibition.dates"/>:
-                                <span>${exhibition.startDate} - ${exhibition.endDate}</span>
+                                <span>${order.startDate} - ${order.endDate}</span>
                             </div>
                             <div class="col s6">
                                 <fmt:message key="text.exhibition.time"/>:
-                                <span>${exhibition.startTime} - ${exhibition.endTime}</span>
+                                <span>${order.startTime} - ${order.endTime}</span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s3">
                                 <fmt:message key="text.exhibition.price"/>:
-                                <span>${exhibition.price}</span>
+                                <span>${order.price}</span>
                             </div>
                             <div class="col s3">
                                 <fmt:message key="text.exhibition.places"/>:
-                                <span>${exhibition.capacity}</span>
+                                <span>${order.capacity}</span>
                             </div>
                             <div class="col s3">
                                 <fmt:message key="text.exhibition.placesLeft"/>:
-                                <span>${exhibition.remainingSeats}</span>
+                                <span>${order.remainingSeats}</span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s2">
                                 <fmt:message key="text.exhibition.hall-name"/>:
                             </div>
-                            <c:forEach var="hall" items="${exhibition.hallList}">
+                            <c:forEach var="hall" items="${order.hallList}">
                                 <div class="col s2">
                                     <span>${hall.name}</span>
                                 </div>
@@ -73,12 +73,12 @@
                         <div class="row">
                             <div class="col s3">
                                 <fmt:message key="text.exhibition.status"/>:
-                                <span>${exhibition.status}</span>
+                                <span>${order.status}</span>
                             </div>
                             <div class="col s3">
                                 <form method="post"
                                       action="${pageContext.request.contextPath}/exhibitions/admin/deactivate-exhibition">
-                                    <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                    <input type="number" hidden name="id" value="${order.id}"/>
                                     <input type="submit" class="btn"
                                            value="<fmt:message key="text.admin.deactivate.exhibition"/>"/>
                                 </form>
@@ -86,7 +86,7 @@
                             <div class="col s3">
                                 <form method="post"
                                       action="${pageContext.request.contextPath}/exhibitions/admin/activate-exhibition">
-                                    <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                    <input type="number" hidden name="id" value="${order.id}"/>
                                     <input type="submit" class="btn"
                                            value="<fmt:message key="text.admin.activate.exhibition"/>"/>
                                 </form>
@@ -94,7 +94,7 @@
                             <div class="col s3">
                                 <form method="post"
                                       action="${pageContext.request.contextPath}/exhibitions/admin/delete-exhibition">
-                                    <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                    <input type="number" hidden name="id" value="${order.id}"/>
                                     <input type="submit" class="btn"
                                            value="<fmt:message key="text.admin.delete.exhibition"/>"/>
                                 </form>
@@ -107,7 +107,7 @@
             <ul class="pagination">
                 <c:if test="${requestScope.currentPage ne 1}">
                     <li class="disabled"><a
-                            href="${pageContext.request.contextPath}/exhibitions/main-page?page=1"><i
+                            href="${pageContext.request.contextPath}/exhibitions/admin/exhibitions?page=1"><i
                             class="material-icons">chevron_left</i></a></li>
                 </c:if>
 
@@ -115,12 +115,12 @@
                     <c:choose>
                         <c:when test="${requestScope.currentPage eq i}">
                             <li class="disabled"><a
-                                    href="${pageContext.request.contextPath}/exhibitions/main-page?page=${i}">${i}</a>
+                                    href="${pageContext.request.contextPath}/exhibitions/admin/exhibitions?page=${i}">${i}</a>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="waves-effect"><a
-                                    href="${pageContext.request.contextPath}/exhibitions/main-page?page=${i}">${i}</a>
+                                    href="${pageContext.request.contextPath}/exhibitions/admin/exhibitions?page=${i}">${i}</a>
                             </li>
                         </c:otherwise>
                     </c:choose>
@@ -128,7 +128,7 @@
 
                 <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
                     <li class="waves-effect">
-                        <a href="${pageContext.request.contextPath}/exhibitions/main-page?page=${requestScope.currentPage + 1}">
+                        <a href="${pageContext.request.contextPath}/exhibitions/admin/exhibitions?page=${requestScope.currentPage + 1}">
                             <i class="material-icons">chevron_right</i>
                         </a>
                     </li>

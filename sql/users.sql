@@ -16,7 +16,7 @@ values ('hvac.kucher.ihor@gmail.com', 'f229a72a4c9b92a92e385a84ac39c4d59fbe7796c
 insert into users (email, password, role)
 values ('kucher.ihor@gmail.com', 'f229a72a4c9b92a92e385a84ac39c4d59fbe7796c76f06d85c560921fd5d58d3', 'user');
 
-delete from users where id > 3;
+delete from users where id > 2;
 
 SELECT * FROM exhibitions.users;
 

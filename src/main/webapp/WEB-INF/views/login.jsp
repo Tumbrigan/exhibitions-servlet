@@ -6,7 +6,6 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="text"/>
 
-
 <jsp:include page="/WEB-INF/views/parts/header.jsp"/>
 
 <div class="page-wrapper">
@@ -22,7 +21,7 @@
             </label> <br>
             <input class="btn" type="submit" value="<fmt:message key="text.enter"/>">
         </form>
-        <c:if test="${sessionScope.incorrectInput != null}">
+        <c:if test="${not empty sessionScope.incorrectInput}">
             <fmt:message key="text.incorrect.password"/>
         </c:if>
     </div>

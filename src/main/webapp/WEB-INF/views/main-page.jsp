@@ -15,66 +15,66 @@
         <%-- list of exhibitions --%>
         <div class="col s8">
             <div class="list-of-shows">
-                <c:forEach var="exhibition" items="${requestScope.exhibitions}">
+                <c:forEach var="order" items="${requestScope.exhibitions}">
                     <div class="show-item">
                         <div class="row">
                             <div class="col s12">
                                 <strong><fmt:message key="text.exhibition.topic"/>:</strong>
                                 <div class="show-item-title">
-                                        ${exhibition.topic}
+                                        ${order.topic}
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12">
                                 <fmt:message key="text.exhibition.category"/>:
-                                <span>${exhibition.category.name}</span>
+                                <span>${order.category.name}</span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s6">
                                 <fmt:message key="text.exhibition.dates"/>:
-                                <span>${exhibition.startDate} - ${exhibition.endDate}</span>
+                                <span>${order.startDate} - ${order.endDate}</span>
                             </div>
                             <div class="col s6">
                                 <fmt:message key="text.exhibition.time"/>:
-                                <span>${exhibition.startTime} - ${exhibition.endTime}</span>
+                                <span>${order.startTime} - ${order.endTime}</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s3">
+                            <div class="col s4">
                                 <fmt:message key="text.exhibition.price"/>:
-                                <span>${exhibition.price}</span>
+                                <span>${order.price}</span>
                             </div>
-                            <div class="col s3">
+                            <div class="col s4">
                                 <fmt:message key="text.exhibition.places"/>:
-                                <span>${exhibition.capacity}</span>
+                                <span>${order.capacity}</span>
                             </div>
-                            <div class="col s3">
+                            <div class="col s4">
                                 <fmt:message key="text.exhibition.placesLeft"/>:
-                                <span>${exhibition.remainingSeats}</span>
+                                <span>${order.remainingSeats}</span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s2">
                                 <fmt:message key="text.exhibition.hall-name"/>:
                             </div>
-                            <c:forEach var="hall" items="${exhibition.hallList}">
+                            <c:forEach var="hall" items="${order.hallList}">
                                 <div class="col s2">
                                     <span>${hall.name}</span>
                                 </div>
                             </c:forEach>
                         </div>
                         <div class="row">
-                            <div class="col s9">
+                            <div class="col s8">
                                 <fmt:message key="text.exhibition.status"/>:
-                                <span>${exhibition.status}</span>
+                                <span>${order.status}</span>
                             </div>
-                            <div class="col s3">
-                                <form method="post"
+                            <div class="col s4">
+                                <form method="get"
                                       action="${pageContext.request.contextPath}/exhibitions/user/buy-ticket">
                                     <label>
-                                        <input type="number" hidden name="id" value="${exhibition.id}"/>
+                                        <input type="number" hidden name="id" value="${order.id}"/>
                                     </label>
                                     <input type="submit" class="btn"
                                            value="<fmt:message key="text.exhibition.buy"/>"/>

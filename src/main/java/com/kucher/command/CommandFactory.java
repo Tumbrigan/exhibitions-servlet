@@ -22,7 +22,11 @@ public class CommandFactory {
         map.put("login", new GetLoginPageCommand());
         map.put("logout", new LogoutCommand());
         map.put("home", new LoginIntoSystemCommand());
+
         map.put("user/home", new GetUserHomeCommand());
+        map.put("user/buy-ticket", new GetBuyTicketPageCommand());
+        map.put("user/get-tickets", new GetTicketsCommand());
+
         map.put("admin/users", new GetUsersPageCommand());
         map.put("admin/home", new GetAdminHomeCommand());
         map.put("admin/exhibitions", new GetExhibitionsPageCommand());

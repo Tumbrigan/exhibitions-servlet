@@ -1,6 +1,7 @@
 package com.kucher.dao;
 
 import com.kucher.model.Exhibition;
+import com.kucher.model.Order;
 import com.kucher.model.User;
 import com.kucher.util.QueryManager;
 import org.apache.logging.log4j.LogManager;
@@ -77,7 +78,7 @@ public class DBManager {
              ResultSet result = statement.executeQuery(query)) {
 
             while (result.next()) {
-                int id = result.getInt("id");
+                int id = result.getInt("category_id");
                 String name = result.getString("name");
                 Exhibition.Category category = new Exhibition.Category(id, name);
 
@@ -123,8 +124,28 @@ public class DBManager {
             ex.printStackTrace();
 //            throw ex;
         }
-        LOGGER.info("got " + exhibitions.size() + " exhibitions from DB");
+        LOGGER.info("getAllExhibitions(int, int) - got " + exhibitions.size() + " exhibitions from DB");
         return exhibitions;
+    }
+
+    public Exhibition getExhibition(int id) {
+        LOGGER.info("getExhibition(int) - id: " + id);
+        Exhibition exhibition = new Exhibition();
+        String query = QueryManager.getQuery("getExhibitionById");
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    fillExhibition(exhibition, connection, resultSet);
+                    return exhibition;
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.info(e);
+        }
+        LOGGER.info("getExhibition(int) - there is no exhibition with id: " + id);
+        return null;
     }
 
     private void fillExhibition(Exhibition exhibition, Connection connection, ResultSet result)
@@ -184,7 +205,7 @@ public class DBManager {
             try (ResultSet resultSet = statement.executeQuery()) {
                 resultSet.next();
 
-                category.setId(resultSet.getInt("id"));
+                category.setId(resultSet.getInt("category_id"));
                 category.setName(resultSet.getString("name"));
             }
         } catch (SQLException e) {
@@ -408,6 +429,85 @@ public class DBManager {
             }
         } catch (SQLException e) {
             LOGGER.info("SQL exception in getNoOfExhibitions method: " + e);
+        }
+        return -1;
+    }
+
+    public boolean setTicketsForUserID(int userID, int exhID, int amount) {
+        String query = QueryManager.getQuery("setTicketsForUserID");
+
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            if (updateRemainingSeatsForeExhId(exhID, amount, connection)) {
+                preparedStatement.setInt(1, userID);
+                preparedStatement.setInt(2, exhID);
+                preparedStatement.setInt(3, amount);
+                int updatedRows = preparedStatement.executeUpdate();
+                if (updatedRows == 1) {
+                    LOGGER.info("setTicketsForUserID(int, int, int) - order is created");
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.info("SQL exception in getNoOfExhibitions method: " + e);
+
+        }
+        return false;
+    }
+
+    private boolean updateRemainingSeatsForeExhId(int exhID, int amount, Connection connection) {
+        String query = QueryManager.getQuery("updateRemainingSeatsForeExhId");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, exhID);
+            preparedStatement.setInt(2, amount);
+            preparedStatement.setInt(3, exhID);
+            int updatedRows = preparedStatement.executeUpdate();
+            if (updatedRows == 1) {
+                LOGGER.info("updateRemainingSeatsForeExhId(int, int, Connection) - seats are set");
+                return true;
+            }
+        } catch (SQLException e) {
+            LOGGER.info("SQL exception in getNoOfExhibitions method: " + e);
+        }
+        return false;
+    }
+
+    public List<Order> getAllOrders(int userID, int limit, int offset) {
+        String query = QueryManager.getQuery("getAllOrders");
+        List<Order> orders = new ArrayList<>();
+        try (Connection connection = ConnectionManager.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userID);
+            preparedStatement.setInt(2, limit);
+            preparedStatement.setInt(3, offset);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Order order = new Order();
+                    order.setId(resultSet.getInt("order_id"));
+                    Exhibition exhibition = new Exhibition();
+                    order.setExhibition(exhibition);
+                    fillExhibition(exhibition, connection, resultSet);
+                    order.setAmount(resultSet.getInt("tickets_amount"));
+                    order.setSum(order.getAmount() * order.getExhibition().getPrice());
+                    orders.add(order);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public int getNoOfOrders() {
+        String query = QueryManager.getQuery("getNoOfOrders");
+        try (Connection connection = ConnectionManager.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return -1;
     }

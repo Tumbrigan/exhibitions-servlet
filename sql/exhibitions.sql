@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS exhibitions.exhibitions ;
+DROP TABLE IF EXISTS exhibitions.exhibitions;
 
 CREATE TABLE IF NOT EXISTS exhibitions.exhibitions (
   id INT AUTO_INCREMENT,
@@ -36,8 +36,5 @@ insert into exhibitions
 (category_id, topic, start_date, end_date, start_time, end_time, price, capacity, remaining_seats, status)
 values (3, 'Video games in our life', '20-11-17', '20-11-18', '19:00', '22:00', 250, 400, 400, 'active');
 
-select * from exhibitions order by start_date desc, start_time asc LIMIT 0, 2;
-
-select count(id) as count from exhibitions;
-
-select * from exhibitions order by id;
+select * from exhibitions where id=3;
+select * from exhibitions;
